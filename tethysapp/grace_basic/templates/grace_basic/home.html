@@ -1,0 +1,35 @@
+{% extends "grace_basic/base.html" %}
+
+{% load tethys_gizmos %}
+
+{% block app_navigation_items %}
+  <li class="title">Regions</li>
+  <li{% if not reg_id %} class="active"{% endif %}>
+    <a href="{% url 'grace_basic:home' %}">Instructions</a>
+  </li>
+  <li{% if reg_id == 'Nepal' %} class="active"{% endif %}>
+    <a href="{% url 'grace_basic:home_graph' id='nepal' %}">Nepal</a>
+  </li>
+  <li{% if reg_id == 'Reg12' %} class="active"{% endif %}>
+    <a href="{% url 'grace_basic:home_graph' id='reg12_texas' %}">Region 12 (Texas)</a>
+  </li>
+  <li{% if reg_id == 'Reg18' %} class="active"{% endif %}>
+    <a href="{% url 'grace_basic:home_graph' id='reg18_calif' %}">Region 18 (California)</a>
+  </li>
+{% endblock %}
+
+{% block app_content %}
+  {% if not reg_id %}
+    <h1>Welcome</h1>
+    <p>This app illustrates how to perform basic Tethys functions using GRACE groundwater data of groundwater volume changes over time since 2002.</p>
+    <p>Click on a region using the links on the left to plot GRACE data for a selected region.</p>
+  {% else %}
+    {% gizmo map_view map_options %}
+    {% gizmo plot_view grace_plot %}
+  {% endif %}
+{% endblock %}
+
+{% block app_actions %}
+  <a href="" class="btn btn-default">Next</a>
+  <a href="" class="btn btn-default">Back</a>
+{% endblock %}
